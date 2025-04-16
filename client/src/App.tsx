@@ -1,6 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import { routes } from "./routes/routeConfig";
+import CreateEvent from "./pages/CreateEvent";
+import EventPage from "./pages/EventPage";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +16,8 @@ const AppRoutes = () => {
 
         <Route path="*" element={<Navigate to="/events" replace />} />
       </Route>
+      <Route path="/events/create" element={<CreateEvent/>} ></Route>
+      <Route path="/events/:id" element={<EventPage />} />
     </Routes>
   );
 };

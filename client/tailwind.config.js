@@ -9,7 +9,8 @@ export default {
       colors: {
         primary: '#0062FF',
         whitetheme: '#E2E2EA',
-        subtitle: '#D0D0DA'
+        subtitle: '#D0D0DA',
+        contentbg:"#F2F3F7"
       }
     },
   },

@@ -8,7 +8,7 @@ const Layout: React.FC = () => {
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex-1 overflow-y-auto bg-gray-50 p-4">
+        <main className="flex-1 overflow-y-auto bg-contentbg p-4">
           <Outlet />
         </main>
       </div>
