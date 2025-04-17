@@ -19,6 +19,7 @@ const CreateEvent: React.FC = () => {
   const navigate = useNavigate();
   const context = useContext(EventContext);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [activeStep, setActiveStep] = useState<string>("basic-info");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
@@ -40,10 +41,8 @@ const CreateEvent: React.FC = () => {
 
   //For handling the next-steps and publishng the event
   const handleNext = async () => {
-
     //step-1
     if (activeStep === "basic-info") {
-
       //Validating step-1
       const result = basicInfoSchema.safeParse(eventData);
       if (!result.success) {
@@ -60,7 +59,6 @@ const CreateEvent: React.FC = () => {
 
       //setp-2
     } else if (activeStep === "image-description") {
-
       //Validating step-2
       const result = imageDescriptionSchema.safeParse(eventData);
       if (!eventData.coverImage) {
@@ -79,15 +77,14 @@ const CreateEvent: React.FC = () => {
       setFieldErrors({});
       setActiveStep("tickets");
     } else {
-
       //Final step in event creation
-
       if (!eventData.ticketTypes || eventData.ticketTypes.length === 0) {
         setFieldErrors({
           ticketTypes: "Please add at least one ticket type before publishing.",
         });
         return;
       }
+      setIsLoading(true);
 
       try {
         const res = await createEvent(eventData);
@@ -101,6 +98,8 @@ const CreateEvent: React.FC = () => {
       } catch (error: any) {
         console.error(error);
         toast.error("Something went wrong.");
+      } finally {
+        setIsLoading(false); // Stop loading
       }
     }
   };
@@ -167,8 +166,16 @@ const CreateEvent: React.FC = () => {
               {renderStepComponent()}
 
               <div className="flex justify-end mt-12 px-4 lg:px-0">
-                <Button variant="primary" onClick={handleNext}>
-                  {activeStep === "tickets" ? "Publish Event" : "Next"}
+                <Button
+                  variant="primary"
+                  onClick={handleNext}
+                  disabled={isLoading}
+                >
+                  {isLoading
+                    ? "Publishing..."
+                    : activeStep === "tickets"
+                    ? "Publish Event"
+                    : "Next"}
                 </Button>
               </div>
             </div>
