@@ -21,8 +21,6 @@ export const imageDescriptionSchema = z.object({
 
 
   //ticket validation
-
-
 export const ticketSchema = z.object({
   name: z.string().trim().min(1, "Ticket name is required"),
   price: z
