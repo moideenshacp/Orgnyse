@@ -1,6 +1,7 @@
 import { FiArrowRight, FiPlus } from "react-icons/fi"
 import Button from "../../shared/components/Button"
 import React from "react";
+import eventImg from "../../assets/Group 27053.png";
 
 interface TicketType {
     id: string;
@@ -22,7 +23,7 @@ const Ticket:React.FC<TicketProps> = ({tickets}) => {
           {tickets.map((ticket) => (
             <div key={ticket.id} className="max-w-xs rounded-lg overflow-hidden shadow-lg bg-white">
               <img 
-                src={ticket.image} 
+                src={ eventImg || ticket.image} 
                 alt={ticket.name} 
                 className="w-full h-40 object-cover"
               />
