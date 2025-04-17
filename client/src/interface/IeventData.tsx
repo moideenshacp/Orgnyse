@@ -1,7 +1,7 @@
 import type { Dayjs } from "dayjs";
 
 export interface TicketType {
-  id: string;
+  id: string | number;
   name: string;
   price: string;
   quantity?: number;

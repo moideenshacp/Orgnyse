@@ -7,6 +7,7 @@ import BasicInfoStep from "../components/createEvent/BasicInfo";
 import ImageDescriptionStep from "../components/createEvent/ImageDescriptionStep";
 import EventData from "../interface/IeventData";
 import TicketsStep from "../components/createEvent/TicketSteps";
+import { createEvent } from "../api/eventApi";
 
 const CreateEvent: React.FC = () => {
   const navigate = useNavigate();
@@ -22,16 +23,26 @@ const CreateEvent: React.FC = () => {
     venueAddress: "",
     description: "",
     coverImage: null,
+    ticketTypes: []
   });
 
-  const handleNext = () => {
+  const handleNext =async () => {
     if (activeStep === "basic-info") {
       setActiveStep("image-description");
     } else if (activeStep === "image-description") {
       setActiveStep("tickets");
     } else {
       console.log("Event created", eventData);
-      navigate("/events");
+
+      try {
+        const res = await createEvent(eventData)
+        console.log(res,"ejkfbejbfelrurferbruruufr");
+        
+      } catch (error) {
+        console.log(error);
+        
+      }
+      // navigate("/events");
     }
   };
 

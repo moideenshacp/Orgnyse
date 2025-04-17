@@ -18,14 +18,6 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<TicketType | null>(null);
 
-  // Initialize ticket types if not already initialized
-  if (!eventData.ticketTypes) {
-    setEventData({
-      ...eventData,
-      ticketTypes: [],
-    });
-  }
-
   const openAddTicketModal = () => {
     setEditingTicket(null);
     setIsModalOpen(true);
@@ -49,12 +41,7 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
       });
     } else {
       // Add new ticket
-      const newId = String(
-        Math.max(
-          0,
-          ...(eventData.ticketTypes?.map((t) => parseInt(t.id)) || [])
-        ) + 1
-      );
+      const newId = Math.floor(1000 + Math.random() * 9000);
 
       const newTicket = {
         id: newId,
@@ -72,7 +59,7 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
     }
   };
 
-  const removeTicketType = (id: string) => {
+  const removeTicketType = (id: string | number) => {
     setEventData({
       ...eventData,
       ticketTypes: eventData.ticketTypes?.filter((ticket) => ticket.id !== id),

@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db"
+import eventRoutes from "./routes/eventRoute";
+
 
 dotenv.config();
 connectDB();
@@ -19,6 +21,9 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+
+app.use("/api", eventRoutes);
+
 
 const port = process.env.PORT;
 

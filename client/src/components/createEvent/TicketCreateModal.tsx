@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import Input from "../../shared/components/Input";
 import Button from "../../shared/components/Button";
-
-interface TicketType {
-  id: string;
-  name: string;
-  price: string;
-  description?: string;
-  maxSeats?: string;
-  oneAttendeePerTicket?: boolean;
-}
+import { TicketType } from "../../interface/IeventData";
 
 interface CreateTicketModalProps {
   isOpen: boolean;
