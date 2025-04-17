@@ -16,6 +16,7 @@ const AppRoutes = () => {
 
         <Route path="*" element={<Navigate to="/events" replace />} />
       </Route>
+      
       <Route path="/events/create" element={<CreateEvent />}></Route>
       <Route path="/events/:id" element={<EventPage />} />
     </Routes>

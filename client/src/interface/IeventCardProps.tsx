@@ -17,7 +17,7 @@ export interface EventCardData {
   coverImage?: string;
   ticketTypes?: TicketType[];
 
-  // Optional analytics fields
+  // Optional  fields
   soldTickets?: number;
   totalTickets?: number;
   revenue?: number;

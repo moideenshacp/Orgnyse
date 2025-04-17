@@ -1,6 +1,8 @@
 import axios from "axios";
 import EventData from "../interface/IeventData";
 
+
+//For creating event
 export const createEvent = async (eventData: EventData) => {
   try {
     const res = await axios.post(
@@ -15,6 +17,7 @@ export const createEvent = async (eventData: EventData) => {
   }
 };
 
+//For fetching all events that have been listed
 export const getAllEvents = async (): Promise<EventData[]> => {
   try {
     const res = await axios.get(
@@ -28,6 +31,8 @@ export const getAllEvents = async (): Promise<EventData[]> => {
   }
 };
 
+
+//For fetching specific event for to show the whole event data in another tab
 export const getEventById = async (id: string): Promise<EventData> => {
   try {
     const res = await axios.get<EventData>(

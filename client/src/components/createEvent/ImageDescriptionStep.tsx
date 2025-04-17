@@ -19,6 +19,7 @@ export const ImageDescriptionStep: React.FC<ImageDescriptionStepProps> = ({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [uploading, setUploading] = useState(false);
 
+  //For handling image upload into the cloudinary
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -40,7 +41,8 @@ export const ImageDescriptionStep: React.FC<ImageDescriptionStepProps> = ({
         formData
       );
 
-      const imageUrl = cloudinaryRes.data.secure_url;
+      const imageUrl = cloudinaryRes.data.secure_url; //Final Image Url to send backend
+
       setEventData((prev) => ({ ...prev, coverImage: imageUrl }));
       clearError("coverImage");
     } catch (error) {
@@ -51,6 +53,7 @@ export const ImageDescriptionStep: React.FC<ImageDescriptionStepProps> = ({
     }
   };
 
+  //For triggering the file input when clicking
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
@@ -110,7 +113,8 @@ export const ImageDescriptionStep: React.FC<ImageDescriptionStepProps> = ({
           onChange={handleImageUpload}
         />
       </div>
-
+      
+        {/* Event description */}
       <div className="mb-6">
         <label className="block text-sm text-gray-600 mb-1">
           Event Description

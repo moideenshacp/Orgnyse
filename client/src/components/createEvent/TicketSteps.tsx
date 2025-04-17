@@ -22,11 +22,15 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<TicketType | null>(null);
 
+  //For handling the modal of ticket creation
+
   const openAddTicketModal = () => {
     clearError("ticketTypes");
     setEditingTicket(null);
     setIsModalOpen(true);
   };
+
+  //For handling the edit ticket modal
 
   const openEditTicketModal = (ticket: TicketType) => {
     setEditingTicket(ticket);
@@ -64,6 +68,7 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
     }
   };
 
+  //For removing the ticket
   const removeTicketType = (id: string | number) => {
     setEventData({
       ...eventData,
@@ -154,6 +159,7 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
         )}
       </div>
 
+      {/* Ticket creation modal */}
       <CreateTicketModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

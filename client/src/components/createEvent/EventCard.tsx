@@ -16,20 +16,25 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
     revenue = 0,
     isActive = true,
   } = event;
+
+  //For formatting the event date
   const formattedDate = new Date(
     eventDate instanceof dayjs
       ? eventDate.toDate()
       : (eventDate as string | Date)
   ).toLocaleDateString();
 
+  //For handling the event data edit
   const handleEdit = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
+  //For handling event deletion
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
+  //For formatting the price
   const formatCurrency = (amount: number) => `$${amount.toLocaleString()}`;
 
   return (

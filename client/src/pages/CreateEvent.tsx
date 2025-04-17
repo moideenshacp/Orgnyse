@@ -17,9 +17,12 @@ import { ZodIssue } from "zod";
 
 const CreateEvent: React.FC = () => {
   const navigate = useNavigate();
+  const context = useContext(EventContext);
 
+  const [activeStep, setActiveStep] = useState<string>("basic-info");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
+  //For clearing the errors in respective fields
   const clearFieldError = (field: string) => {
     setFieldErrors((prev) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,18 +31,20 @@ const CreateEvent: React.FC = () => {
     });
   };
 
-  const [activeStep, setActiveStep] = useState<string>("basic-info");
-
-  const context = useContext(EventContext);
-
   if (!context) {
     throw new Error("EventContext must be used within an EventProvider");
   }
 
+  //Taking the data and neccesary things from context
   const { eventData, resetEventData, setEventData } = context;
 
+  //For handling the next-steps and publishng the event
   const handleNext = async () => {
+
+    //step-1
     if (activeStep === "basic-info") {
+
+      //Validating step-1
       const result = basicInfoSchema.safeParse(eventData);
       if (!result.success) {
         const errs: Record<string, string> = {};
@@ -52,7 +57,11 @@ const CreateEvent: React.FC = () => {
       }
       setFieldErrors({});
       setActiveStep("image-description");
+
+      //setp-2
     } else if (activeStep === "image-description") {
+
+      //Validating step-2
       const result = imageDescriptionSchema.safeParse(eventData);
       if (!eventData.coverImage) {
         setFieldErrors({ coverImage: "Please upload an image" });
@@ -70,6 +79,9 @@ const CreateEvent: React.FC = () => {
       setFieldErrors({});
       setActiveStep("tickets");
     } else {
+
+      //Final step in event creation
+
       if (!eventData.ticketTypes || eventData.ticketTypes.length === 0) {
         setFieldErrors({
           ticketTypes: "Please add at least one ticket type before publishing.",
@@ -93,6 +105,7 @@ const CreateEvent: React.FC = () => {
     }
   };
 
+  //For rendering each step dynamically
   const renderStepComponent = () => {
     switch (activeStep) {
       case "basic-info":

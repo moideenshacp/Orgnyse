@@ -14,6 +14,8 @@ const EventPage: React.FC = () => {
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
 
+
+  //For fetching the whole event data
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {

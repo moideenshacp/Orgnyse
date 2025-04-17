@@ -17,6 +17,8 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
   onSave,
   initialData,
 }) => {
+
+  //Ticket data state
   const [ticketData, setTicketData] = useState<Partial<TicketType>>({
     name: "",
     price: "",
@@ -25,6 +27,7 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
     oneAttendeePerTicket: true,
     ...initialData,
   });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
 
@@ -40,7 +43,11 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
     });
   };
 
+  //For handling the event ticket creation
+
   const handleSubmit = () => {
+    
+    //Validating the Data using zod
     const result = ticketSchema.safeParse(ticketData);
 
     if (!result.success) {

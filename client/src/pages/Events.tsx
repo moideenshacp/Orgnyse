@@ -15,6 +15,8 @@ const Events: React.FC = () => {
   const [events, setEvents] = useState<EventCardData[]>([]);
   const [loading, setLoading] = useState(true);
 
+
+  //For fecthing every event in DB
   const fetchEvents = async () => {
     try {
       const data: EventData[] = await getAllEvents();
@@ -41,6 +43,7 @@ const Events: React.FC = () => {
     navigate("/events/create");
   };
 
+  //For handling the search
   const filteredEvents = events.filter((event) =>
     event.eventTitle.toLowerCase().includes(searchTerm.toLowerCase())
   );

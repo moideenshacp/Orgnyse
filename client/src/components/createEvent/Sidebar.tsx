@@ -6,12 +6,15 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeStep, setActiveStep }) => {
+
+  //Step in event creation
   const steps = [
     { id: "basic-info", label: "Basic Event Info" },
     { id: "image-description", label: "Image & Description" },
     { id: "tickets", label: "Tickets" },
   ];
 
+  //For setting the active step that is currently going on
   const handleStepClick = (stepId: string) => {
     if (setActiveStep) {
       setActiveStep(stepId);
