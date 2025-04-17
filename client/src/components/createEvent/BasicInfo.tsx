@@ -5,11 +5,15 @@ import Input from "../../shared/components/Input";
 interface BasicInfoStepProps {
   eventData: EventData;
   setEventData: React.Dispatch<React.SetStateAction<EventData>>;
+  errors?: Record<string, string>;
+  clearError: (field: string) => void;
 }
 
 const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
   eventData,
   setEventData,
+  errors = {},
+  clearError
 }) => {
   return (
     <>
@@ -24,11 +28,15 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
           type="text"
           placeholder="Event title"
           value={eventData.eventTitle}
-          onChange={(e) =>
+          onChange={(e) =>{
+            clearError("eventTitle")
             setEventData({ ...eventData, eventTitle: e.target.value })
-          }
+          }}
           className="w-full"
         />
+        {errors.eventTitle && (
+          <p className="text-red-500 text-sm mt-1">{errors.eventTitle}</p>
+        )}
       </div>
 
       {/* Date and Time Section */}
@@ -39,11 +47,16 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
             <DatePicker
               className="h-11 w-full"
               value={eventData.eventDate}
-              onChange={(date) =>
+              onChange={(date) =>{
+                
+                clearError("eventDate")
                 setEventData({ ...eventData, eventDate: date })
-              }
+              }}
               placeholder="MM/DD/YYYY"
             />
+            {errors.eventDate && (
+              <p className="text-red-500 text-sm mt-1">{errors.eventDate}</p>
+            )}
           </div>
 
           <div className="w-full sm:w-48">
@@ -53,10 +66,14 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
             <TimePicker
               className="h-11 w-full"
               value={eventData.startTime}
-              onChange={(time) =>
+              onChange={(time) =>{
+                clearError("startTime")
                 setEventData({ ...eventData, startTime: time })
-              }
+              }}
             />
+            {errors.startTime && (
+              <p className="text-red-500 text-sm mt-1">{errors.startTime}</p>
+            )}
           </div>
 
           <div className="w-full sm:w-48">
@@ -64,8 +81,13 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
             <TimePicker
               className="h-11 w-full"
               value={eventData.endTime}
-              onChange={(time) => setEventData({ ...eventData, endTime: time })}
+              onChange={(time) => {
+                clearError("endTime")
+                setEventData({ ...eventData, endTime: time })}}
             />
+            {errors.endTime && (
+              <p className="text-red-500 text-sm mt-1">{errors.endTime}</p>
+            )}
           </div>
         </div>
       </div>
@@ -81,10 +103,15 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
               type="text"
               placeholder="Venue Name"
               value={eventData.venueName}
-              onChange={(e) =>
+              onChange={(e) =>{
+
+                clearError("venueName")
                 setEventData({ ...eventData, venueName: e.target.value })
-              }
+              }}
             />
+            {errors.venueName && (
+              <p className="text-red-500 text-sm mt-1">{errors.venueName}</p>
+            )}
           </div>
 
           <div className="flex-1 relative">
@@ -95,10 +122,16 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
               type="text"
               placeholder="Venue Address... start typing"
               value={eventData.venueAddress}
-              onChange={(e) =>
+              onChange={(e) =>{
+
+                clearError("venueAddress")
                 setEventData({ ...eventData, venueAddress: e.target.value })
-              }
+              }}
             />
+
+            {errors.venueAddress && (
+              <p className="text-red-500 text-sm mt-1">{errors.venueAddress}</p>
+            )}
             <a href="#" className="text-blue-500 text-sm mt-1 block">
               Can't find your address? Enter manually
             </a>

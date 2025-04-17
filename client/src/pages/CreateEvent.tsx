@@ -8,10 +8,24 @@ import ImageDescriptionStep from "../components/createEvent/ImageDescriptionStep
 import TicketsStep from "../components/createEvent/TicketSteps";
 import { createEvent } from "../api/eventApi";
 import { EventContext } from "../context/EventContext";
+import { basicInfoSchema, imageDescriptionSchema } from "../validations/eventValidation";
+import { toast } from "react-toastify";
+import {  ZodIssue } from "zod";
 
 const CreateEvent: React.FC = () => {
   const navigate = useNavigate();
 
+  const [fieldErrors, setFieldErrors] = useState<Record<string,string>>({});
+
+  const clearFieldError = (field: string) => {
+    setFieldErrors((prev) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [field]: _, ...rest } = prev; 
+      return rest;
+    });
+  };
+  
+  
   const [activeStep, setActiveStep] = useState<string>("basic-info");
 
   const context = useContext(EventContext);
@@ -25,24 +39,53 @@ const CreateEvent: React.FC = () => {
 
   const handleNext =async () => {
     if (activeStep === "basic-info") {
+      const result = basicInfoSchema.safeParse(eventData);
+      if (!result.success) {
+        const errs: Record<string,string> = {};
+        result.error.issues.forEach((issue: ZodIssue) => {
+          const field = issue.path[0] as string;
+          if (!(field in errs)) errs[field] = issue.message;
+        });
+        setFieldErrors(errs);
+        return; 
+      }
+      setFieldErrors({});
       setActiveStep("image-description");
     } else if (activeStep === "image-description") {
+      const result = imageDescriptionSchema.safeParse(eventData);
+      if (!eventData.coverImage) {
+        setFieldErrors({ coverImage: "Please upload an image" });
+        return;
+      }
+      if (!result.success) {
+        const errs: Record<string,string> = {};
+        result.error.issues.forEach((issue: ZodIssue) => {
+          const field = issue.path[0] as string;
+          if (!(field in errs)) errs[field] = issue.message;
+        });
+        setFieldErrors(errs);
+        return; 
+      }
+      setFieldErrors({})
       setActiveStep("tickets");
     } else {
-      console.log("Event created", eventData);
-
+      if (!eventData.ticketTypes || eventData.ticketTypes.length === 0) {
+        setFieldErrors({ "ticketTypes": "Please add at least one ticket type before publishing." });
+        return;
+      }
+  
       try {
         const res = await createEvent(eventData)
-        console.log(res,"ejkfbejbfelrurferbruruufr");
         if(res.status === 201){
           resetEventData()
           navigate("/events");
-
+          toast.success("Event created sucessfully..")
         }
         
-      } catch (error) {
-        console.log(error);
-        
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error:any) {
+        console.error(error);
+        toast.error("Something went wrong.");
       }
     }
   };
@@ -50,11 +93,11 @@ const CreateEvent: React.FC = () => {
   const renderStepComponent = () => {
     switch (activeStep) {
       case "basic-info":
-        return <BasicInfoStep eventData={eventData} setEventData={setEventData} />;
+        return <BasicInfoStep eventData={eventData} setEventData={setEventData} errors={fieldErrors} clearError={clearFieldError} />;
       case "image-description":
-        return <ImageDescriptionStep eventData={eventData} setEventData={setEventData} />;
+        return <ImageDescriptionStep eventData={eventData} setEventData={setEventData} errors={fieldErrors} clearError={clearFieldError} />;
       case "tickets":
-        return <TicketsStep eventData={eventData} setEventData={setEventData} />;
+        return <TicketsStep eventData={eventData} setEventData={setEventData} errors={fieldErrors} clearError={clearFieldError} />;
       default:
         return null;
     }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../../shared/components/Input";
 import Button from "../../shared/components/Button";
 import { TicketType } from "../../interface/IeventData";
+import { ticketSchema } from "../../validations/eventValidation";
 
 interface CreateTicketModalProps {
   isOpen: boolean;
@@ -16,8 +17,6 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
   onSave,
   initialData,
 }) => {
-  console.log(initialData,"dwubdwbu");
-  
   const [ticketData, setTicketData] = useState<Partial<TicketType>>({
     name: "",
     price: "",
@@ -26,12 +25,15 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
     oneAttendeePerTicket: true,
     ...initialData,
   });
-
-  console.log(ticketData,"dwednwdbu");
-  
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
 
   const handleChange = (field: keyof TicketType, value: string | boolean) => {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [field]: "",
+    }));
+
     setTicketData({
       ...ticketData,
       [field]: value,
@@ -39,6 +41,18 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
   };
 
   const handleSubmit = () => {
+    const result = ticketSchema.safeParse(ticketData);
+
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0]] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
     onSave(ticketData);
     onClose();
   };
@@ -63,6 +77,9 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
                 onChange={(e) => handleChange("name", e.target.value)}
                 className="w-full"
               />
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+              )}
             </div>
 
             <div>
@@ -80,6 +97,9 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
                   onChange={(e) => handleChange("price", e.target.value)}
                   className="pl-8"
                 />
+                {errors.price && (
+                  <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+                )}
               </div>
             </div>
 
@@ -93,6 +113,9 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
                 value={ticketData.maxSeats || ""}
                 onChange={(e) => handleChange("maxSeats", e.target.value)}
               />
+              {errors.maxSeats && (
+                <p className="text-red-500 text-sm mt-1">{errors.maxSeats}</p>
+              )}
             </div>
 
             <div>

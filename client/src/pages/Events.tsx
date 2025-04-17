@@ -18,8 +18,6 @@ const Events: React.FC = () => {
   const fetchEvents = async () => {
     try {
       const data: EventData[] = await getAllEvents();
-console.log(data,"hey dtaatt");
-
       const transformedData: EventCardData[] = data.map((event) => ({
         
         ...event,
@@ -36,9 +34,7 @@ console.log(data,"hey dtaatt");
       setLoading(false);
     }
   };
-  useEffect(() => {
-    console.log("buu");
-    
+  useEffect(() => {    
     fetchEvents();
   }, []);
 

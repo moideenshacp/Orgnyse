@@ -20,8 +20,6 @@ const Contact = () => {
         </div>
         
         <Button 
-          variant="outline" 
-          className="border-blue-600 bg-blue-600 text-white items-center gap-2"
         >
           <span>SEND MESSAGE</span>
         </Button>

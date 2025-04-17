@@ -13,7 +13,7 @@ export interface TicketType {
 
 interface EventData {
   eventTitle: string;
-  eventDate: Dayjs | null;
+  eventDate: Dayjs | null ;
   startTime: Dayjs | null;
   endTime: Dayjs | null;
   venueName: string;

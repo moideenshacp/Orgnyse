@@ -9,22 +9,26 @@ import { AiOutlinePlus } from "react-icons/ai";
 interface TicketsStepProps {
   eventData: EventData;
   setEventData: React.Dispatch<React.SetStateAction<EventData>>;
+  errors?: Record<string, string>;
+  clearError: (field: string) => void;
 }
 
 const TicketsStep: React.FC<TicketsStepProps> = ({
   eventData,
   setEventData,
+  errors={},
+  clearError
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<TicketType | null>(null);
 
   const openAddTicketModal = () => {
+    clearError("ticketTypes")
     setEditingTicket(null);
     setIsModalOpen(true);
   };
 
   const openEditTicketModal = (ticket: TicketType) => {
-    console.log('Editing Ticket:', ticket);
     setEditingTicket(ticket);
     setIsModalOpen(true);
   };
@@ -143,6 +147,9 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
             <p className="text-gray-500">
               No ticket types added yet. Click "Add Ticket Type" to get started.
             </p>
+            {errors.ticketTypes && (
+            <p className="text-red-500 text-sm mt-1">{errors.ticketTypes}</p>
+          )}
           </div>
         )}
       </div>

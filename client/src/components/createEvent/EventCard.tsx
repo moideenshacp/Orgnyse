@@ -6,7 +6,6 @@ import { EventCardProps } from "../../interface/IeventCardProps";
 import dayjs from "dayjs";
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
-    console.log(event,"event in fard")
   const {
     _id,
     eventTitle,

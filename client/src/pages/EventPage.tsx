@@ -22,8 +22,6 @@ const EventPage: React.FC = () => {
         setLoading(true);
         if (!id) return;
         const res = await getEventById(id)
-        console.log("full evnt",res)
-
         setEvent(res);
         setLoading(false);
       } catch (error) {
