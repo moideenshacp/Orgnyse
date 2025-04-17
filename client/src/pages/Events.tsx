@@ -19,12 +19,11 @@ const Events: React.FC = () => {
     try {
       const data: EventData[] = await getAllEvents();
       const transformedData: EventCardData[] = data.map((event) => ({
-        
         ...event,
         coverImage: event.coverImage ?? undefined,
-        eventDate: event.eventDate|| "",
-        startTime: event.startTime|| "",
-        endTime: event.endTime|| "",
+        eventDate: event.eventDate || "",
+        startTime: event.startTime || "",
+        endTime: event.endTime || "",
       }));
 
       setEvents(transformedData);
@@ -34,7 +33,7 @@ const Events: React.FC = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {    
+  useEffect(() => {
     fetchEvents();
   }, []);
 

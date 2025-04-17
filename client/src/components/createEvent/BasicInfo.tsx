@@ -13,7 +13,7 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
   eventData,
   setEventData,
   errors = {},
-  clearError
+  clearError,
 }) => {
   return (
     <>
@@ -28,9 +28,9 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
           type="text"
           placeholder="Event title"
           value={eventData.eventTitle}
-          onChange={(e) =>{
-            clearError("eventTitle")
-            setEventData({ ...eventData, eventTitle: e.target.value })
+          onChange={(e) => {
+            clearError("eventTitle");
+            setEventData({ ...eventData, eventTitle: e.target.value });
           }}
           className="w-full"
         />
@@ -47,10 +47,9 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
             <DatePicker
               className="h-11 w-full"
               value={eventData.eventDate}
-              onChange={(date) =>{
-                
-                clearError("eventDate")
-                setEventData({ ...eventData, eventDate: date })
+              onChange={(date) => {
+                clearError("eventDate");
+                setEventData({ ...eventData, eventDate: date });
               }}
               placeholder="MM/DD/YYYY"
             />
@@ -66,9 +65,9 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
             <TimePicker
               className="h-11 w-full"
               value={eventData.startTime}
-              onChange={(time) =>{
-                clearError("startTime")
-                setEventData({ ...eventData, startTime: time })
+              onChange={(time) => {
+                clearError("startTime");
+                setEventData({ ...eventData, startTime: time });
               }}
             />
             {errors.startTime && (
@@ -82,8 +81,9 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
               className="h-11 w-full"
               value={eventData.endTime}
               onChange={(time) => {
-                clearError("endTime")
-                setEventData({ ...eventData, endTime: time })}}
+                clearError("endTime");
+                setEventData({ ...eventData, endTime: time });
+              }}
             />
             {errors.endTime && (
               <p className="text-red-500 text-sm mt-1">{errors.endTime}</p>
@@ -103,10 +103,9 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
               type="text"
               placeholder="Venue Name"
               value={eventData.venueName}
-              onChange={(e) =>{
-
-                clearError("venueName")
-                setEventData({ ...eventData, venueName: e.target.value })
+              onChange={(e) => {
+                clearError("venueName");
+                setEventData({ ...eventData, venueName: e.target.value });
               }}
             />
             {errors.venueName && (
@@ -122,10 +121,9 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({
               type="text"
               placeholder="Venue Address... start typing"
               value={eventData.venueAddress}
-              onChange={(e) =>{
-
-                clearError("venueAddress")
-                setEventData({ ...eventData, venueAddress: e.target.value })
+              onChange={(e) => {
+                clearError("venueAddress");
+                setEventData({ ...eventData, venueAddress: e.target.value });
               }}
             />
 

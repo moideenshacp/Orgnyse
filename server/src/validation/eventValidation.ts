@@ -10,7 +10,7 @@ export const eventWithTicketsSchema = z.object({
     .trim()
     .min(20, "Description must be at least 20 characters"),
 
-    ticketTypes: z
+  ticketTypes: z
     .array(
       z.object({
         name: z.string().trim().min(1, "Ticket name is required"),

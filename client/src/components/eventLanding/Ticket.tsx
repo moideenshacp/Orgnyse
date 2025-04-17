@@ -26,13 +26,10 @@ const Ticket: React.FC<TicketProps> = ({ event }) => {
                 alt={ticket.name}
                 className="w-full h-[120px] object-cover"
               />
-
             </div>
             <div className="bg-gradient-to-b from-[#1E88E5] to-[#1565C0] p-4 text-white">
               <h3 className="font-bold text-md mb-1">{ticket.name}</h3>
-              <p className="text-xs text-blue-100 mb-4">
-                {ticket.description}
-              </p>
+              <p className="text-xs text-blue-100 mb-4">{ticket.description}</p>
               <div className="flex justify-between items-center">
                 <div className="text-white font-bold text-sm">
                   ${ticket.price}

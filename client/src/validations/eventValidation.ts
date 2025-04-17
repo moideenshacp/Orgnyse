@@ -1,26 +1,21 @@
 import { z } from "zod";
 
-
 // Step 1: Basic Info Validation with stricter rules
-export const basicInfoSchema = z
-  .object({
-    eventTitle: z.string().trim().min(1, "Event title is required"),
-    venueName: z.string().trim().min(1, "Venue name is required"),
-    venueAddress: z.string().trim().min(1, "Venue address is required"),
-  })
-
-
+export const basicInfoSchema = z.object({
+  eventTitle: z.string().trim().min(1, "Event title is required"),
+  venueName: z.string().trim().min(1, "Venue name is required"),
+  venueAddress: z.string().trim().min(1, "Venue address is required"),
+});
 
 // Step 2: Image & Description Validation
 export const imageDescriptionSchema = z.object({
-    description: z
-      .string()
-      .trim()
-      .min(20, "Description must be at least 20 characters"),
-  });
+  description: z
+    .string()
+    .trim()
+    .min(20, "Description must be at least 20 characters"),
+});
 
-
-  //ticket validation
+//ticket validation
 export const ticketSchema = z.object({
   name: z.string().trim().min(1, "Ticket name is required"),
   price: z

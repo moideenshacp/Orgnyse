@@ -16,8 +16,11 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
     revenue = 0,
     isActive = true,
   } = event;
-  const formattedDate = new Date(eventDate instanceof dayjs ? eventDate.toDate() : (eventDate as string | Date)).toLocaleDateString();
-
+  const formattedDate = new Date(
+    eventDate instanceof dayjs
+      ? eventDate.toDate()
+      : (eventDate as string | Date)
+  ).toLocaleDateString();
 
   const handleEdit = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -117,7 +120,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
         </div>
 
         <div className="mt-3">
-        <a href={`/events/${_id}`} target="_blank" rel="noopener noreferrer">
+          <a href={`/events/${_id}`} target="_blank" rel="noopener noreferrer">
             <Button variant="primary" className="w-full">
               View Event Page
             </Button>

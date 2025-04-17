@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { 
-  FiPieChart, 
-  FiUsers, 
-  FiMail, 
-  FiGrid, 
-  FiUser, 
-  FiFileText, 
-  FiBarChart2, 
+import {
+  FiPieChart,
+  FiUsers,
+  FiMail,
+  FiGrid,
+  FiUser,
+  FiFileText,
+  FiBarChart2,
   FiSettings,
   FiMenu,
-  FiX 
+  FiX,
 } from "react-icons/fi";
 
 interface SidebarItemProps {
@@ -65,7 +65,7 @@ const Sidebar: React.FC = () => {
     <>
       {/* Mobile hamburger menu */}
       <div className="md:hidden fixed top-0 left-0 z-40 p-4">
-        <button 
+        <button
           onClick={toggleSidebar}
           className="flex items-center justify-center w-10 h-10 bg-white rounded-md shadow-md text-gray-700 hover:bg-gray-100"
         >
@@ -75,14 +75,14 @@ const Sidebar: React.FC = () => {
 
       {/* Mobile overlay */}
       {isOpen && (
-        <div 
+        <div
           className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
           onClick={toggleSidebar}
         />
       )}
 
       {/* Sidebar */}
-      <aside 
+      <aside
         className={`bg-white min-h-screen border-r border-gray-200 fixed z-30 transition-all duration-300 ease-in-out
                     ${isOpen ? "translate-x-0" : "-translate-x-full"} 
                     md:translate-x-0 md:static md:w-56`}

@@ -8,46 +8,47 @@ import ImageDescriptionStep from "../components/createEvent/ImageDescriptionStep
 import TicketsStep from "../components/createEvent/TicketSteps";
 import { createEvent } from "../api/eventApi";
 import { EventContext } from "../context/EventContext";
-import { basicInfoSchema, imageDescriptionSchema } from "../validations/eventValidation";
+import {
+  basicInfoSchema,
+  imageDescriptionSchema,
+} from "../validations/eventValidation";
 import { toast } from "react-toastify";
-import {  ZodIssue } from "zod";
+import { ZodIssue } from "zod";
 
 const CreateEvent: React.FC = () => {
   const navigate = useNavigate();
 
-  const [fieldErrors, setFieldErrors] = useState<Record<string,string>>({});
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const clearFieldError = (field: string) => {
     setFieldErrors((prev) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { [field]: _, ...rest } = prev; 
+      const { [field]: _, ...rest } = prev;
       return rest;
     });
   };
-  
-  
+
   const [activeStep, setActiveStep] = useState<string>("basic-info");
 
   const context = useContext(EventContext);
-  
+
   if (!context) {
     throw new Error("EventContext must be used within an EventProvider");
   }
 
-  const { eventData,resetEventData, setEventData } = context;
+  const { eventData, resetEventData, setEventData } = context;
 
-
-  const handleNext =async () => {
+  const handleNext = async () => {
     if (activeStep === "basic-info") {
       const result = basicInfoSchema.safeParse(eventData);
       if (!result.success) {
-        const errs: Record<string,string> = {};
+        const errs: Record<string, string> = {};
         result.error.issues.forEach((issue: ZodIssue) => {
           const field = issue.path[0] as string;
           if (!(field in errs)) errs[field] = issue.message;
         });
         setFieldErrors(errs);
-        return; 
+        return;
       }
       setFieldErrors({});
       setActiveStep("image-description");
@@ -58,32 +59,34 @@ const CreateEvent: React.FC = () => {
         return;
       }
       if (!result.success) {
-        const errs: Record<string,string> = {};
+        const errs: Record<string, string> = {};
         result.error.issues.forEach((issue: ZodIssue) => {
           const field = issue.path[0] as string;
           if (!(field in errs)) errs[field] = issue.message;
         });
         setFieldErrors(errs);
-        return; 
+        return;
       }
-      setFieldErrors({})
+      setFieldErrors({});
       setActiveStep("tickets");
     } else {
       if (!eventData.ticketTypes || eventData.ticketTypes.length === 0) {
-        setFieldErrors({ "ticketTypes": "Please add at least one ticket type before publishing." });
+        setFieldErrors({
+          ticketTypes: "Please add at least one ticket type before publishing.",
+        });
         return;
       }
-  
+
       try {
-        const res = await createEvent(eventData)
-        if(res.status === 201){
-          resetEventData()
+        const res = await createEvent(eventData);
+        if (res.status === 201) {
+          resetEventData();
           navigate("/events");
-          toast.success("Event created sucessfully..")
+          toast.success("Event created sucessfully..");
         }
-        
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error:any) {
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         console.error(error);
         toast.error("Something went wrong.");
       }
@@ -93,11 +96,32 @@ const CreateEvent: React.FC = () => {
   const renderStepComponent = () => {
     switch (activeStep) {
       case "basic-info":
-        return <BasicInfoStep eventData={eventData} setEventData={setEventData} errors={fieldErrors} clearError={clearFieldError} />;
+        return (
+          <BasicInfoStep
+            eventData={eventData}
+            setEventData={setEventData}
+            errors={fieldErrors}
+            clearError={clearFieldError}
+          />
+        );
       case "image-description":
-        return <ImageDescriptionStep eventData={eventData} setEventData={setEventData} errors={fieldErrors} clearError={clearFieldError} />;
+        return (
+          <ImageDescriptionStep
+            eventData={eventData}
+            setEventData={setEventData}
+            errors={fieldErrors}
+            clearError={clearFieldError}
+          />
+        );
       case "tickets":
-        return <TicketsStep eventData={eventData} setEventData={setEventData} errors={fieldErrors} clearError={clearFieldError} />;
+        return (
+          <TicketsStep
+            eventData={eventData}
+            setEventData={setEventData}
+            errors={fieldErrors}
+            clearError={clearFieldError}
+          />
+        );
       default:
         return null;
     }

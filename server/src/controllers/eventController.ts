@@ -8,9 +8,9 @@ export class EventController implements IEventController {
 
   public createEvent = async (req: Request, res: Response): Promise<void> => {
     try {
-        console.log(req.body.eventData,"hey data");
+      console.log(req.body.eventData, "hey data");
       const parseResult = eventWithTicketsSchema.safeParse(req.body.eventData);
-        
+
       if (!parseResult.success) {
         const errorMessages = parseResult.error.errors.map((e) => ({
           field: e.path.join("."),

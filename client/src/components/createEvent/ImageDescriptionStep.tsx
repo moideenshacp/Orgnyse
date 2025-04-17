@@ -42,7 +42,7 @@ export const ImageDescriptionStep: React.FC<ImageDescriptionStepProps> = ({
 
       const imageUrl = cloudinaryRes.data.secure_url;
       setEventData((prev) => ({ ...prev, coverImage: imageUrl }));
-      clearError("coverImage")
+      clearError("coverImage");
     } catch (error) {
       console.error("Image upload failed:", error);
       toast.error("Failed to upload image. Please try again.");
@@ -98,9 +98,9 @@ export const ImageDescriptionStep: React.FC<ImageDescriptionStepProps> = ({
             />
           )}
         </div>
-          {errors.coverImage && (
-            <p className="text-red-500 text-sm mt-1">{errors.coverImage}</p>
-          )}
+        {errors.coverImage && (
+          <p className="text-red-500 text-sm mt-1">{errors.coverImage}</p>
+        )}
 
         <input
           ref={fileInputRef}

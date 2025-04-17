@@ -9,8 +9,6 @@ import ImageSection from "../components/eventLanding/ImageSection";
 import EventData from "../interface/IeventData";
 import { getEventById } from "../api/eventApi";
 
-
-
 const EventPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [event, setEvent] = useState<EventData | null>(null);
@@ -21,7 +19,7 @@ const EventPage: React.FC = () => {
       try {
         setLoading(true);
         if (!id) return;
-        const res = await getEventById(id)
+        const res = await getEventById(id);
         setEvent(res);
         setLoading(false);
       } catch (error) {

@@ -16,14 +16,14 @@ interface TicketsStepProps {
 const TicketsStep: React.FC<TicketsStepProps> = ({
   eventData,
   setEventData,
-  errors={},
-  clearError
+  errors = {},
+  clearError,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<TicketType | null>(null);
 
   const openAddTicketModal = () => {
-    clearError("ticketTypes")
+    clearError("ticketTypes");
     setEditingTicket(null);
     setIsModalOpen(true);
   };
@@ -148,8 +148,8 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
               No ticket types added yet. Click "Add Ticket Type" to get started.
             </p>
             {errors.ticketTypes && (
-            <p className="text-red-500 text-sm mt-1">{errors.ticketTypes}</p>
-          )}
+              <p className="text-red-500 text-sm mt-1">{errors.ticketTypes}</p>
+            )}
           </div>
         )}
       </div>
