@@ -1,20 +1,10 @@
 import React from "react";
 import Button from "../../shared/components/Button";
+import EventData from "../../interface/IeventData";
 
 
-interface EventDetails {
-    id: string;
-    title: string;
-    subtitle: string;
-    date: string;
-    time: string;
-    location: string;
-    description: string;
-    mainImage: string;
-    organizerName: string;
-  }
 interface AboutProps {
-    event:EventDetails
+    event:EventData
 }
 const About:React.FC<AboutProps> = ({event}) => {
 

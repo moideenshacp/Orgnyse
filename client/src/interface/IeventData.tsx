@@ -3,11 +3,12 @@ import type { Dayjs } from "dayjs";
 export interface TicketType {
   id: string | number;
   name: string;
-  price: string;
+  price: string | number;
   quantity?: number;
   description?: string;
   maxSeats?: string;
   oneAttendeePerTicket?: boolean;
+  image?:string
 }
 
 interface EventData {
@@ -18,11 +19,11 @@ interface EventData {
   venueName: string;
   venueAddress: string;
   description: string;
-  coverImage?: File | null;
-  ticketName?: string;
-  ticketPrice?: string;
+  coverImage:  string | null;
 
   ticketTypes?: TicketType[];
 }
+
+
 
 export default EventData;

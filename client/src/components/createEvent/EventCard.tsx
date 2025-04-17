@@ -1,52 +1,51 @@
 import React from "react";
 import { FiEdit } from "react-icons/fi";
 import Button from "../../shared/components/Button";
-import { EventCardProps } from "../../interface/IeventCardProps";
 import eventImg from "../../assets/Group 27053.png";
+import { EventCardProps } from "../../interface/IeventCardProps";
+import dayjs from "dayjs";
 
-const EventCard: React.FC<EventCardProps> = ({
-  id,
-  name,
-  date,
-  soldTickets,
-  totalTickets,
-  revenue,
-  isActive,
-}) => {
-  const handleView = () => {
-    window.open(`/events/${id}`, "_blank");
-  };
+const EventCard: React.FC<EventCardProps> = ({ event }) => {
+    console.log(event,"event in fard")
+  const {
+    _id,
+    eventTitle,
+    eventDate,
+    coverImage,
+    soldTickets = 0,
+    totalTickets = 0,
+    revenue = 0,
+    isActive = true,
+  } = event;
+  const formattedDate = new Date(eventDate instanceof dayjs ? eventDate.toDate() : (eventDate as string | Date)).toLocaleDateString();
+
 
   const handleEdit = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // You can implement your edit logic here
-    // For example: navigate(`/events/edit/${id}`);
   };
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // You can implement your delete logic here
   };
 
-  const formatCurrency = (amount: number) => {
-    return `$${amount.toLocaleString()}`;
-  };
+  const formatCurrency = (amount: number) => `$${amount.toLocaleString()}`;
 
   return (
     <div className="rounded-lg shadow-md overflow-hidden bg-white w-full max-w-xs">
-      {/* Event image */}
       <div className="h-32 w-full relative">
-        <img src={eventImg} alt={name} className="w-full h-full object-cover" />
+        <img
+          src={coverImage || eventImg}
+          alt={eventTitle}
+          className="w-full h-full object-cover"
+        />
         <div className="absolute bottom-2 left-2 bg-white px-2 py-1 rounded text-sm">
-          {date}
+          {formattedDate}
         </div>
-        <div className="absolute top-2 right-2"></div>
       </div>
 
-      {/* Event details */}
       <div className="p-4">
         <div className="flex justify-between items-start">
-          <h3 className="font-medium text-lg">{name}</h3>
+          <h3 className="font-medium text-lg">{eventTitle}</h3>
           <div className="relative group">
             <button className="bg-white text-gray-700 px-1 py-1 rounded">
               ⋮
@@ -74,9 +73,9 @@ const EventCard: React.FC<EventCardProps> = ({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  <path d="M3 6h18"></path>
-                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                  <path d="M3 6h18" />
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
                 </svg>
                 <span>Delete</span>
               </div>
@@ -119,9 +118,11 @@ const EventCard: React.FC<EventCardProps> = ({
         </div>
 
         <div className="mt-3">
-          <Button variant="primary" onClick={handleView} className="w-full">
-            View Event Page
-          </Button>
+        <a href={`/events/${_id}`} target="_blank" rel="noopener noreferrer">
+            <Button variant="primary" className="w-full">
+              View Event Page
+            </Button>
+          </a>
         </div>
       </div>
     </div>

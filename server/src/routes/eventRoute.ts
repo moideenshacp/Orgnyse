@@ -15,5 +15,8 @@ const eventController:IEventController = new EventController(eventService);
 
 // Routes
 router.post("/create-events",eventController.createEvent);
+router.get("/events", eventController.getAllEvents);
+router.get("/events/:id", eventController.getEventById);
+
 
 export default router;

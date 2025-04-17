@@ -14,8 +14,10 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
   isOpen,
   onClose,
   onSave,
-  initialData = {},
+  initialData,
 }) => {
+  console.log(initialData,"dwubdwbu");
+  
   const [ticketData, setTicketData] = useState<Partial<TicketType>>({
     name: "",
     price: "",
@@ -25,6 +27,8 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
     ...initialData,
   });
 
+  console.log(ticketData,"dwednwdbu");
+  
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
 
   const handleChange = (field: keyof TicketType, value: string | boolean) => {

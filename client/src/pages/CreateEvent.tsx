@@ -1,30 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../shared/components/Button";
 import Sidebar from "../components/createEvent/Sidebar";
 import Header from "../components/Layout/Header";
 import BasicInfoStep from "../components/createEvent/BasicInfo";
 import ImageDescriptionStep from "../components/createEvent/ImageDescriptionStep";
-import EventData from "../interface/IeventData";
 import TicketsStep from "../components/createEvent/TicketSteps";
 import { createEvent } from "../api/eventApi";
+import { EventContext } from "../context/EventContext";
 
 const CreateEvent: React.FC = () => {
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = useState<string>("basic-info");
 
-  const [eventData, setEventData] = useState<EventData>({
-    eventTitle: "",
-    eventDate: null,
-    startTime: null,
-    endTime: null,
-    venueName: "",
-    venueAddress: "",
-    description: "",
-    coverImage: null,
-    ticketTypes: []
-  });
+  const context = useContext(EventContext);
+  
+  if (!context) {
+    throw new Error("EventContext must be used within an EventProvider");
+  }
+
+  const { eventData,resetEventData, setEventData } = context;
+
 
   const handleNext =async () => {
     if (activeStep === "basic-info") {
@@ -37,12 +34,16 @@ const CreateEvent: React.FC = () => {
       try {
         const res = await createEvent(eventData)
         console.log(res,"ejkfbejbfelrurferbruruufr");
+        if(res.status === 201){
+          resetEventData()
+          navigate("/events");
+
+        }
         
       } catch (error) {
         console.log(error);
         
       }
-      // navigate("/events");
     }
   };
 

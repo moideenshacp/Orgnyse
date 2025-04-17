@@ -1,20 +1,9 @@
 import React from "react";
-import eventImg from "../../assets/Group 27053.png";
+import EventData from "../../interface/IeventData";
 
 
-interface EventDetails {
-    id: string;
-    title: string;
-    subtitle: string;
-    date: string;
-    time: string;
-    location: string;
-    description: string;
-    mainImage: string;
-    organizerName: string;
-  }
 interface ImageSectionProps {
-    event:EventDetails
+    event:EventData
 }
 
 const ImageSection:React.FC<ImageSectionProps> = ({event}) => {
@@ -23,8 +12,8 @@ const ImageSection:React.FC<ImageSectionProps> = ({event}) => {
         <div className="flex justify-center">
           <div className="relative h-64 md:h-96 w-full md:w-1/2 overflow-hidden rounded-lg shadow-lg">
             <img
-              src={eventImg}
-              alt={event.title}
+              src={event.coverImage || ""}
+              alt={event.eventTitle}
               className="w-full h-full object-cover"
             />
           </div>

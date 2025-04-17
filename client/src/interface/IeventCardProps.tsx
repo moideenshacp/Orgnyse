@@ -1,10 +1,25 @@
+import { Dayjs } from "dayjs";
+import { TicketType } from "./IeventData";
+
 export interface EventCardProps {
-    id: string;
-    name: string;
-    date: string;
-    image: string;
-    soldTickets: number;
-    totalTickets: number;
-    revenue: number;
-    isActive: boolean;
-  }
+  event: EventCardData;
+}
+
+export interface EventCardData {
+  _id?: string;
+  eventTitle: string;
+  eventDate: string | Dayjs; 
+  startTime: string | Dayjs;
+  endTime: string | Dayjs;
+  venueName: string;
+  venueAddress: string;
+  description: string;
+  coverImage?: string;
+  ticketTypes?: TicketType[];
+
+  // Optional analytics fields
+  soldTickets?: number;
+  totalTickets?: number;
+  revenue?: number;
+  isActive?: boolean;
+}

@@ -24,6 +24,7 @@ const TicketsStep: React.FC<TicketsStepProps> = ({
   };
 
   const openEditTicketModal = (ticket: TicketType) => {
+    console.log('Editing Ticket:', ticket);
     setEditingTicket(ticket);
     setIsModalOpen(true);
   };

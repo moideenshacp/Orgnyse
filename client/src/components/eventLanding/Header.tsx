@@ -1,53 +1,51 @@
-import { FiArrowRight, FiCalendar, FiClock, FiMapPin } from "react-icons/fi"
-import Button from "../../shared/components/Button"
+import { FiArrowRight, FiCalendar, FiClock, FiMapPin } from "react-icons/fi";
+import Button from "../../shared/components/Button";
 import Logo from "../../assets/WhiteLogo.png";
+import EventData from "../../interface/IeventData";
+import dayjs from "dayjs";
 
-
-interface EventDetails {
-    id: string;
-    title: string;
-    subtitle: string;
-    date: string;
-    time: string;
-    location: string;
-    description: string;
-    mainImage: string;
-    organizerName: string;
-  }
 interface HeaderProps {
-    event:EventDetails
+  event: EventData;
 }
-const Header:React.FC<HeaderProps> = ({event}) => {
+
+const Header: React.FC<HeaderProps> = ({ event }) => {
   return (
     <div>
-        <header className="bg-primary text-white">
+      <header className="bg-gradient-to-b from-[#1E88E5] to-[#1565C0] text-white">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <img src={Logo} alt="Logo" className="ml-10 mt-2" />
-
+          <img src={Logo} alt="Logo" className="ml-10 mt-2 w-32" />
         </div>
-        
+
         {/* Hero Section */}
         <div className="container mx-auto px-4 py-12 text-center">
-          <p className="uppercase tracking-wider text-sm mb-2">{event.subtitle}</p>
-          <h1 className="text-4xl font-bold mb-8">{event.title}</h1>
-          
-          <div className="flex justify-center space-x-8 mb-8">
+          <p className="uppercase tracking-wider text-sm mb-2">Event</p>
+          <h1 className="text-4xl font-bold mb-8">{event.eventTitle}</h1>
+
+          <div className="flex justify-center space-x-8 mb-8 text-sm">
             <div className="flex items-center">
               <FiCalendar className="h-5 w-5 mr-2" />
-              <span>{event.date}</span>
+              <span>
+                {event.eventDate
+                  ? dayjs(event.eventDate).format("DD MMM, YYYY")
+                  : "N/A"}
+              </span>
             </div>
             <div className="flex items-center">
               <FiClock className="h-5 w-5 mr-2" />
-              <span>{event.time}</span>
+              <span>
+                {event.startTime
+                  ? dayjs(event.startTime).format("hh:mm A")
+                  : "N/A"}
+              </span>
             </div>
             <div className="flex items-center">
               <FiMapPin className="h-5 w-5 mr-2" />
-              <span>{event.location}</span>
+              <span>{event.venueName}</span>
             </div>
           </div>
-          
-          <Button 
-            variant="secondary" 
+
+          <Button
+            variant="secondary"
             className="bg-white text-primary hover:bg-blue-50"
           >
             BUY TICKET
@@ -56,7 +54,7 @@ const Header:React.FC<HeaderProps> = ({event}) => {
         </div>
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
